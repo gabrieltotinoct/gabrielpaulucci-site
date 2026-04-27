@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termos de Uso — Gabriel Totino</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#FAFAF8; --bg2:#F4F2EE; --border:#E0DCD4; --text:#1A1A18; --muted:#6B6B60; --accent:#F05A28; --dark:#07080A; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+
+  header{background:var(--dark);padding:20px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--accent)}
+  .logo{display:flex;align-items:center;gap:12px}
+  .lm{width:36px;height:36px;position:relative;display:flex;align-items:center;justify-content:center}
+  .lm::before,.lm::after,.lm .b,.lm .t{content:'';position:absolute;width:9px;height:9px}
+  .lm::before{top:0;left:0;border-top:2px solid #E8E0D0;border-left:2px solid #E8E0D0}
+  .lm::after{bottom:0;right:0;border-bottom:2px solid #E8E0D0;border-right:2px solid #E8E0D0}
+  .lm .b{bottom:0;left:0;border-bottom:2px solid #E8E0D0;border-left:2px solid #E8E0D0}
+  .lm .t{top:0;right:0;border-top:2px solid #E8E0D0;border-right:2px solid #E8E0D0}
+  .lm span{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--accent)}
+  .logo-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#E8E0D0;letter-spacing:3px}
+  .back{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+  .back:hover{color:var(--accent)}
+
+  .hero{background:var(--dark);padding:60px 40px 48px;text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .hero-label{font-size:11px;color:var(--accent);letter-spacing:6px;text-transform:uppercase;display:block;margin-bottom:14px}
+  .hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,6vw,60px);font-weight:900;color:#E8E0D0;letter-spacing:2px;text-transform:uppercase;line-height:1}
+  .hero-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:12px;letter-spacing:1px}
+
+  .content{max-width:760px;margin:0 auto;padding:60px 40px 80px}
+
+  h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);letter-spacing:2px;text-transform:uppercase;margin:40px 0 12px;padding-bottom:10px;border-bottom:2px solid var(--accent)}
+  h2:first-of-type{margin-top:0}
+  p{font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:14px}
+  p strong{color:var(--text);font-weight:500}
+  ul{margin:10px 0 14px 20px}
+  li{font-size:15px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:6px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .info-box{background:var(--bg2);border-left:3px solid var(--accent);padding:16px 20px;margin-bottom:14px;font-size:14px;color:var(--muted);line-height:1.7}
+  .info-box strong{color:var(--text)}
+
+  footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding:24px 40px;text-align:center;font-size:11px;color:rgba(255,255,255,.3);letter-spacing:2px}
+
+  @media(max-width:600px){header,footer{padding:16px 20px}.content{padding:40px 20px}.hero{padding:40px 20px 32px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="lm"><div class="b"></div><div class="t"></div><span>GT</span></div>
+    <span class="logo-name">Gabriel Totino</span>
+  </div>
+  <a href="https://gabrielpaulucci.com.br" class="back">← Voltar ao site</a>
+</header>
+
+<div class="hero">
+  <span class="hero-label">Documentos Legais</span>
+  <h1 class="hero-title">Termos de Uso</h1>
+  <p class="hero-sub">Última atualização: Abril de 2025</p>
+</div>
+
+<div class="content">
+
+  <div class="info-box">
+    <strong>Responsável:</strong> Gabriel Totino Paulucci · CPF 090.842.756-59<br>
+    <strong>Contato:</strong> <a href="mailto:gabrieltotino.ct@gmail.com">gabrieltotino.ct@gmail.com</a><br>
+    <strong>Site:</strong> gabrielpaulucci.com.br
+  </div>
+
+  <h2>1. Aceitação dos termos</h2>
+  <p>Ao acessar e utilizar o site <strong>gabrielpaulucci.com.br</strong> e seus serviços, você concorda com os presentes Termos de Uso. Caso não concorde com algum dos termos, recomendamos que não utilize o site.</p>
+
+  <h2>2. Sobre os serviços</h2>
+  <p>O site oferece os seguintes serviços:</p>
+  <ul>
+    <li><strong>Consultoria de treino online</strong> — serviço pago com videochamadas e programa personalizado</li>
+    <li><strong>Calculadora de TMB</strong> — ferramenta gratuita e informativa para cálculo da taxa metabólica basal</li>
+    <li><strong>Conteúdo informativo</strong> — informações sobre treino, saúde e performance</li>
+  </ul>
+
+  <h2>3. Calculadora de TMB — Limitações</h2>
+  <p>A calculadora de TMB disponível no site tem caráter <strong>exclusivamente informativo</strong>. Os resultados são estimativas baseadas em fórmulas científicas e <strong>não substituem</strong> a avaliação de médico, nutricionista ou profissional de educação física habilitado.</p>
+  <p>Gabriel Totino Paulucci <strong>não é nutricionista</strong> e não fornece prescrição alimentar. As sugestões de dieta geradas por ferramentas de inteligência artificial são de responsabilidade do usuário e das plataformas de IA utilizadas.</p>
+
+  <h2>4. Consultoria de treino</h2>
+  <p>A consultoria de treino é prestada por Gabriel Totino Paulucci, que está em processo de obtenção do registro no CREF. O contratante declara estar ciente dessa condição ao contratar o serviço.</p>
+  <p>O programa de treino entregue é personalizado e baseado nas informações fornecidas pelo contratante na ficha de anamnese. <strong>É responsabilidade do contratante</strong> informar corretamente suas condições de saúde, lesões e limitações físicas.</p>
+
+  <h2>5. Responsabilidades do usuário</h2>
+  <p>Ao utilizar os serviços, o usuário se compromete a:</p>
+  <ul>
+    <li>Fornecer informações verdadeiras e completas</li>
+    <li>Consultar um médico antes de iniciar qualquer programa de treino</li>
+    <li>Interromper o treino e buscar orientação médica em caso de dor ou desconforto</li>
+    <li>Não utilizar o conteúdo do site para fins comerciais sem autorização</li>
+  </ul>
+
+  <h2>6. Limitação de responsabilidade</h2>
+  <p>Gabriel Totino Paulucci não se responsabiliza por:</p>
+  <ul>
+    <li>Lesões ou danos à saúde decorrentes do uso inadequado dos programas de treino</li>
+    <li>Resultados individuais, que podem variar conforme genética, alimentação e outros fatores</li>
+    <li>Conteúdo gerado por ferramentas de inteligência artificial de terceiros</li>
+    <li>Indisponibilidade temporária do site ou de suas ferramentas</li>
+  </ul>
+
+  <h2>7. Propriedade intelectual</h2>
+  <p>Todo o conteúdo do site — textos, imagens, marca, layout e programas de treino entregues — é de propriedade de Gabriel Totino Paulucci. É <strong>proibida a reprodução, distribuição ou uso comercial</strong> sem autorização prévia e por escrito.</p>
+
+  <h2>8. Pagamentos e reembolsos</h2>
+  <p>Os valores e condições de pagamento da consultoria são combinados diretamente via WhatsApp. Em caso de desistência após o início da prestação de serviços, não haverá reembolso proporcional, salvo acordo específico entre as partes.</p>
+
+  <h2>9. Cancelamento</h2>
+  <p>O usuário pode cancelar a consultoria a qualquer momento entrando em contato via e-mail ou WhatsApp. O cancelamento não gera direito a reembolso de valores já pagos.</p>
+
+  <h2>10. Alterações nos termos</h2>
+  <p>Estes Termos de Uso podem ser atualizados a qualquer momento. A versão vigente sempre estará disponível nesta página com a data da última atualização.</p>
+
+  <h2>11. Foro</h2>
+  <p>Para dirimir eventuais controvérsias, fica eleito o foro da Comarca de João Monlevade, Estado de Minas Gerais, com renúncia a qualquer outro, por mais privilegiado que seja.</p>
+
+  <h2>12. Contato</h2>
+  <p>Para dúvidas sobre estes Termos de Uso:<br>
+  <strong>E-mail:</strong> <a href="mailto:gabrieltotino.ct@gmail.com">gabrieltotino.ct@gmail.com</a></p>
+
+</div>
+
+<footer>© 2025 Gabriel Totino · CPF 090.842.756-59 · Todos os direitos reservados</footer>
+
+</body>
+</html>
