@@ -652,6 +652,36 @@ function gerarDieta() {
     return null;
   }
 
+  var resultado = "PLANO ALIMENTAR (BASEADO NOS SEUS ALIMENTOS)\n\n";
+
+var refeicoes = ["Café da manhã", "Lanche da manhã", "Almoço", "Lanche da tarde", "Jantar"];
+
+var caloriasPorRefeicao = Math.round(dadosCalculo.meta / 5);
+
+refeicoes.forEach(function(refeicao) {
+  resultado += "---- " + refeicao.toUpperCase() + " ----\n";
+
+  lista.forEach(function(item) {
+    var food = getFood(item);
+    if (food) {
+      var gramas = 100;
+      var kcal = (food.p*4 + food.c*4 + food.g*9);
+
+      resultado += food.nome + " - " + gramas + "g (" + Math.round(kcal) + " kcal)\n";
+    }
+  });
+
+  resultado += "\n";
+});
+
+resultado += "Total diário aproximado: " + dadosCalculo.meta + " kcal\n";
+resultado += "\nDica: mantenha consistência e ajuste quantidades conforme evolução.";
+
+document.getElementById('ai-content').textContent = resultado;
+document.getElementById('ai-result').classList.add('visible');
+document.getElementById('btn-download').style.display = 'flex';
+}
+
   var alimentos = lista.map(getFood).filter(f => f);
 
   if (alimentos.length === 0) {
