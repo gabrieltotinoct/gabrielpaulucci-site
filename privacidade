@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidade — Gabriel Totino</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#FAFAF8; --bg2:#F4F2EE; --border:#E0DCD4; --text:#1A1A18; --muted:#6B6B60; --accent:#F05A28; --dark:#07080A; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+
+  header{background:var(--dark);padding:20px 40px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--accent)}
+  .logo{display:flex;align-items:center;gap:12px}
+  .lm{width:36px;height:36px;position:relative;display:flex;align-items:center;justify-content:center}
+  .lm::before,.lm::after,.lm .b,.lm .t{content:'';position:absolute;width:9px;height:9px}
+  .lm::before{top:0;left:0;border-top:2px solid #E8E0D0;border-left:2px solid #E8E0D0}
+  .lm::after{bottom:0;right:0;border-bottom:2px solid #E8E0D0;border-right:2px solid #E8E0D0}
+  .lm .b{bottom:0;left:0;border-bottom:2px solid #E8E0D0;border-left:2px solid #E8E0D0}
+  .lm .t{top:0;right:0;border-top:2px solid #E8E0D0;border-right:2px solid #E8E0D0}
+  .lm span{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--accent)}
+  .logo-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#E8E0D0;letter-spacing:3px}
+  .back{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+  .back:hover{color:var(--accent)}
+
+  .hero{background:var(--dark);padding:60px 40px 48px;text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .hero-label{font-size:11px;color:var(--accent);letter-spacing:6px;text-transform:uppercase;display:block;margin-bottom:14px}
+  .hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,6vw,60px);font-weight:900;color:#E8E0D0;letter-spacing:2px;text-transform:uppercase;line-height:1}
+  .hero-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:12px;letter-spacing:1px}
+
+  .content{max-width:760px;margin:0 auto;padding:60px 40px 80px}
+
+  h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);letter-spacing:2px;text-transform:uppercase;margin:40px 0 12px;padding-bottom:10px;border-bottom:2px solid var(--accent)}
+  h2:first-of-type{margin-top:0}
+  p{font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:14px}
+  p strong{color:var(--text);font-weight:500}
+  ul{margin:10px 0 14px 20px}
+  li{font-size:15px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:6px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .info-box{background:var(--bg2);border-left:3px solid var(--accent);padding:16px 20px;margin-bottom:14px;font-size:14px;color:var(--muted);line-height:1.7}
+  .info-box strong{color:var(--text)}
+
+  footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding:24px 40px;text-align:center;font-size:11px;color:rgba(255,255,255,.3);letter-spacing:2px}
+
+  @media(max-width:600px){header,footer{padding:16px 20px}.content{padding:40px 20px}.hero{padding:40px 20px 32px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="lm"><div class="b"></div><div class="t"></div><span>GT</span></div>
+    <span class="logo-name">Gabriel Totino</span>
+  </div>
+  <a href="https://gabrielpaulucci.com.br" class="back">← Voltar ao site</a>
+</header>
+
+<div class="hero">
+  <span class="hero-label">Documentos Legais</span>
+  <h1 class="hero-title">Política de Privacidade</h1>
+  <p class="hero-sub">Última atualização: Abril de 2025</p>
+</div>
+
+<div class="content">
+
+  <div class="info-box">
+    <strong>Responsável:</strong> Gabriel Totino Paulucci · CPF 090.842.756-59<br>
+    <strong>Contato:</strong> <a href="mailto:gabrieltotino.ct@gmail.com">gabrieltotino.ct@gmail.com</a><br>
+    <strong>Site:</strong> gabrielpaulucci.com.br
+  </div>
+
+  <h2>1. Informações que coletamos</h2>
+  <p>Ao utilizar nosso site e ferramentas, podemos coletar as seguintes informações:</p>
+  <ul>
+    <li>Dados inseridos voluntariamente na calculadora de TMB (sexo, idade, peso, altura, nível de atividade e objetivo)</li>
+    <li>Dados de contato fornecidos via WhatsApp ou e-mail ao solicitar a consultoria</li>
+    <li>Dados de navegação coletados automaticamente (páginas visitadas, tempo de navegação)</li>
+  </ul>
+
+  <h2>2. Como usamos suas informações</h2>
+  <p>As informações coletadas são utilizadas exclusivamente para:</p>
+  <ul>
+    <li>Fornecer a consultoria de treino personalizada</li>
+    <li>Calcular e exibir sua taxa metabólica basal na ferramenta online</li>
+    <li>Responder dúvidas e manter comunicação com você</li>
+    <li>Melhorar a qualidade dos serviços oferecidos</li>
+  </ul>
+  <p><strong>Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros</strong> para fins comerciais.</p>
+
+  <h2>3. Calculadora de TMB</h2>
+  <p>A calculadora de TMB disponível em nosso site processa os dados inseridos <strong>localmente no seu navegador</strong>. Os dados não são armazenados em nossos servidores nem compartilhados com terceiros. Os resultados gerados têm caráter exclusivamente informativo e não substituem orientação médica ou nutricional profissional.</p>
+
+  <h2>4. Cookies e rastreamento</h2>
+  <p>Nosso site pode utilizar cookies básicos para funcionamento e análise de tráfego. Você pode desativar os cookies nas configurações do seu navegador, porém isso pode afetar o funcionamento de algumas funcionalidades.</p>
+
+  <h2>5. WhatsApp e comunicação</h2>
+  <p>Ao entrar em contato via WhatsApp, você concorda que sua mensagem será lida e respondida por Gabriel Totino Paulucci. Não compartilhamos seu número ou mensagens com terceiros.</p>
+
+  <h2>6. Links externos</h2>
+  <p>Nosso site pode conter links para plataformas externas como Instagram, WhatsApp, ChatGPT e Claude. Não nos responsabilizamos pela política de privacidade dessas plataformas.</p>
+
+  <h2>7. Seus direitos (LGPD)</h2>
+  <p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você tem direito a:</p>
+  <ul>
+    <li>Confirmar a existência de tratamento dos seus dados</li>
+    <li>Acessar seus dados pessoais</li>
+    <li>Solicitar a correção de dados incompletos ou incorretos</li>
+    <li>Solicitar a eliminação dos seus dados</li>
+    <li>Revogar o consentimento a qualquer momento</li>
+  </ul>
+  <p>Para exercer qualquer desses direitos, entre em contato pelo e-mail <a href="mailto:gabrieltotino.ct@gmail.com">gabrieltotino.ct@gmail.com</a>.</p>
+
+  <h2>8. Segurança</h2>
+  <p>Adotamos medidas técnicas e organizacionais para proteger suas informações contra acesso não autorizado, perda ou divulgação indevida.</p>
+
+  <h2>9. Alterações nesta política</h2>
+  <p>Esta política pode ser atualizada periodicamente. Recomendamos que você a revise regularmente. A data da última atualização consta no topo deste documento.</p>
+
+  <h2>10. Contato</h2>
+  <p>Para dúvidas sobre esta Política de Privacidade, entre em contato:<br>
+  <strong>E-mail:</strong> <a href="mailto:gabrieltotino.ct@gmail.com">gabrieltotino.ct@gmail.com</a></p>
+
+</div>
+
+<footer>© 2025 Gabriel Totino · CPF 090.842.756-59 · Todos os direitos reservados</footer>
+
+</body>
+</html>
