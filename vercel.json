@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/consultoria", "destination": "/consultoria.html" },
+    { "source": "/calculadora", "destination": "/calculadora.html" }
+  ]
+}
