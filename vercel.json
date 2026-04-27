@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/consultoria", "destination": "/consultoria.html" },
-    { "source": "/calculadora", "destination": "/calculadora.html" }
+    { "source": "/calculadora", "destination": "/calculadora.html" },
+    { "source": "/privacidade", "destination": "/privacidade.html" },
+    { "source": "/termos", "destination": "/termos.html" }
   ]
 }
