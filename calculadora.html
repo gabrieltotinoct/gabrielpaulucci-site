@@ -3,584 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora TMB + Plano Alimentar — Gabriel Totino</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<title>Calculadora TMB + Plano Alimentar</title>
+
 <style>
-  :root {
-    --bg:      #FAFAF8;
-    --bg2:     #F4F2EE;
-    --bg3:     #ECEAE5;
-    --border:  #E0DDD7;
-    --text:    #1A1A1A;
-    --muted:   #6B7280;
-    --light:   #9CA3AF;
-    --accent:  #F05A28;
-    --accent2: #C44A1E;
-    --white:   #FFFFFF;
-    --success: #2E7D4F;
-  }
+body{
+  font-family: Arial;
+  background:#f5f5f5;
+  padding:20px;
+}
 
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body {
-    background: var(--white);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
+.container{
+  max-width:500px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+}
 
-  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes spin   { to{transform:rotate(360deg)} }
-  @keyframes barFill{ from{width:0} }
-  @keyframes pulse  { 0%,100%{opacity:1} 50%{opacity:.5} }
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+}
 
-  /* ── HEADER ── */
-  .site-header {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 18px 40px;
-    display: flex; justify-content:space-between; align-items:center;
-    position: sticky; top:0; z-index:100;
-    box-shadow: 0 2px 16px rgba(0,0,0,.05);
-  }
+button{
+  width:100%;
+  padding:12px;
+  background:#F05A28;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
 
-  .logo { display:flex; align-items:center; gap:14px; }
-  .logo-mark {
-    width:38px; height:38px; position:relative;
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  }
-  .logo-mark::before,.logo-mark::after,
-  .logo-mark .lm-bl,.logo-mark .lm-tr {
-    content:''; position:absolute; width:10px; height:10px;
-  }
-  .logo-mark::before{top:0;left:0;border-top:2px solid var(--text);border-left:2px solid var(--text);}
-  .logo-mark::after {bottom:0;right:0;border-bottom:2px solid var(--text);border-right:2px solid var(--text);}
-  .logo-mark .lm-bl{bottom:0;left:0;border-bottom:2px solid var(--text);border-left:2px solid var(--text);}
-  .logo-mark .lm-tr{top:0;right:0;border-top:2px solid var(--text);border-right:2px solid var(--text);}
-  .logo-mark span { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:900; color:var(--accent); }
-  .logo-text .logo-name { font-family:'Barlow Condensed',sans-serif; font-size:19px; font-weight:700; color:var(--text); letter-spacing:3px; }
-  .logo-text .logo-sub  { font-size:11px; color:var(--accent); letter-spacing:4px; text-transform:uppercase; margin-top:1px; }
-
-  .header-badge {
-    display:flex; align-items:center; gap:7px;
-    border:1.5px solid rgba(240,90,40,.35); padding:6px 14px;
-    background:rgba(240,90,40,.05);
-  }
-  .hb-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite; }
-  .header-badge span { font-size:11px; color:var(--accent); letter-spacing:4px; text-transform:uppercase; font-weight:500; }
-
-  /* ── HERO ── */
-  .hero {
-    padding: 72px 40px 56px;
-    text-align: center;
-    background: linear-gradient(150deg, #FFFFFF 55%, #FEF0EA 100%);
-    position: relative; overflow: hidden;
-  }
-  .hero::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(to right, transparent, var(--accent), transparent); }
-  .hero-ring { position:absolute; border-radius:50%; border:1px solid rgba(240,90,40,.08); pointer-events:none; }
-  .r1{width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);}
-  .r2{width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.5;}
-
-  .hero-label { font-size:11px; color:var(--accent); letter-spacing:6px; text-transform:uppercase; margin-bottom:18px; display:block; position:relative; z-index:2; font-weight:500; }
-  .hero-title {
-    font-family:'Barlow Condensed',sans-serif;
-    font-size:clamp(40px,6vw,72px); font-weight:900;
-    color:var(--text); letter-spacing:2px; text-transform:uppercase; line-height:1;
-    margin-bottom:18px; position:relative; z-index:2;
-  }
-  .hero-title .acc { color:var(--accent); }
-  .hero-desc {
-    font-size:16px; color:var(--muted); font-weight:300; max-width:520px;
-    margin:0 auto; line-height:1.7; position:relative; z-index:2;
-  }
-
-  /* ── MAIN ── */
-  .main { max-width:780px; margin:0 auto; padding:0 24px 80px; }
-
-  /* ── CARD ── */
-  .card {
-    background:var(--white); border:1px solid var(--border);
-    padding:40px; margin-top:28px;
-    box-shadow:0 2px 16px rgba(0,0,0,.05);
-  }
-  .card-header { display:flex; align-items:center; gap:12px; margin-bottom:28px; }
-  .card-step {
-    width:28px; height:28px; background:var(--accent); flex-shrink:0;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:900; color:#fff;
-  }
-  .card-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; color:var(--text); letter-spacing:2px; text-transform:uppercase; }
-
-  /* ── FORM ── */
-  .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
-  .field { display:flex; flex-direction:column; gap:6px; }
-  .field label { font-size:11px; color:var(--accent); letter-spacing:4px; text-transform:uppercase; font-weight:500; }
-  .field input, .field select {
-    background:var(--bg2); border:1.5px solid var(--border);
-    color:var(--text); font-family:'DM Sans',sans-serif;
-    font-size:15px; padding:11px 14px; outline:none;
-    transition:border-color .2s; border-radius:0; -webkit-appearance:none;
-  }
-  .field input:focus,.field select:focus { border-color:var(--accent); background:var(--white); }
-  .field select option { background:var(--white); }
-
-  /* ── BUTTONS ── */
-  .btn-calc {
-    display:inline-flex; align-items:center; gap:10px;
-    background:var(--accent); color:#fff;
-    font-family:'DM Sans',sans-serif; font-weight:500; font-size:15px;
-    padding:14px 32px; border:none; cursor:pointer;
-    transition:background .2s, transform .15s;
-    width:100%; justify-content:center; letter-spacing:.5px;
-  }
-  .btn-calc:hover { background:var(--accent2); }
-
-  .btn-download {
-    display:none; align-items:center; gap:10px;
-    background:var(--white); border:1.5px solid var(--success);
-    color:var(--success); font-family:'DM Sans',sans-serif;
-    font-weight:500; font-size:14px; padding:12px 24px;
-    cursor:pointer; transition:background .2s, color .2s;
-    width:100%; justify-content:center; margin-top:12px;
-  }
-  .btn-download:hover { background:var(--success); color:#fff; }
-
-  /* ── RESULTS ── */
-  .results { display:none; animation:fadeUp .5s ease; }
-  .results.visible { display:block; }
-
-  .metrics-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-bottom:2px; }
-  .metric {
-    background:var(--bg2); padding:24px 20px; text-align:center;
-    border-top:3px solid var(--border);
-  }
-  .metric.featured { border-top-color:var(--accent); background:rgba(240,90,40,.05); }
-  .metric-label { font-size:10px; color:var(--muted); letter-spacing:4px; text-transform:uppercase; margin-bottom:8px; }
-  .metric-value { font-family:'Barlow Condensed',sans-serif; font-size:40px; font-weight:900; color:var(--text); line-height:1; }
-  .metric.featured .metric-value { color:var(--accent); }
-  .metric-unit { font-size:12px; color:var(--light); margin-top:4px; }
-
-  .macro-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-bottom:24px; }
-  .macro { background:var(--bg2); padding:20px; border-left:3px solid var(--border); }
-  .macro.prot { border-left-color:#378ADD; }
-  .macro.carb { border-left-color:#639922; }
-  .macro.fat  { border-left-color:#BA7517; }
-  .macro-name { font-size:11px; color:var(--muted); letter-spacing:3px; text-transform:uppercase; margin-bottom:8px; }
-  .macro-g    { font-family:'Barlow Condensed',sans-serif; font-size:30px; font-weight:900; color:var(--text); line-height:1; }
-  .macro.prot .macro-g { color:#378ADD; }
-  .macro.carb .macro-g { color:#639922; }
-  .macro.fat  .macro-g { color:#BA7517; }
-  .macro-kcal { font-size:12px; color:var(--light); margin-top:4px; }
-  .bar-wrap { height:4px; background:var(--border); margin-top:10px; overflow:hidden; }
-  .bar { height:100%; animation:barFill .8s ease; }
-
-  /* ── FOOD SECTION ── */
-  .food-section { background:var(--white); border:1px solid var(--border); padding:40px; margin-top:2px; box-shadow:0 2px 16px rgba(0,0,0,.05); }
-
-  .food-note {
-    background:rgba(240,90,40,.05); border-left:3px solid var(--accent);
-    padding:14px 18px; margin-bottom:24px;
-    font-size:13px; color:var(--muted); line-height:1.7;
-  }
-  .food-note strong { color:var(--text); font-weight:500; }
-
-  .food-textarea {
-    width:100%; background:var(--bg2); border:1.5px solid var(--border);
-    color:var(--text); font-family:'DM Sans',sans-serif;
-    font-size:15px; font-weight:300; padding:16px;
-    min-height:120px; resize:vertical; outline:none;
-    line-height:1.6; transition:border-color .2s; border-radius:0;
-    margin-bottom:16px;
-  }
-  .food-textarea:focus { border-color:var(--accent); background:var(--white); }
-  .food-textarea::placeholder { color:var(--light); }
-
-  /* ── LOADING ── */
-  .loading { display:none; align-items:center; gap:12px; padding:20px; background:var(--bg2); border:1px solid var(--border); margin-top:16px; font-size:14px; color:var(--muted); }
-  .loading.visible { display:flex; }
-  .spin { width:18px; height:18px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .8s linear infinite; flex-shrink:0; }
-
-  /* ── AI RESULT ── */
-  .ai-result { display:none; background:var(--white); border:1px solid var(--border); border-top:3px solid var(--success); padding:32px; margin-top:16px; }
-  .ai-result.visible { display:block; animation:fadeUp .5s ease; }
-  .ai-header { display:flex; align-items:center; gap:10px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border); }
-  .ai-dot { width:8px; height:8px; background:var(--success); border-radius:50%; }
-  .ai-title { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; color:var(--text); letter-spacing:2px; text-transform:uppercase; }
-  .ai-content { font-size:15px; color:var(--muted); line-height:1.9; font-weight:300; white-space:pre-wrap; }
-
-  /* ── DISCLAIMER ── */
-  .disclaimer {
-    background:var(--bg2); border:1px solid var(--border);
-    padding:18px 22px; margin-top:2px;
-    font-size:12px; color:var(--muted); line-height:1.7;
-  }
-  .disclaimer strong { color:var(--text); }
-
-  /* ── CTA ── */
-  .cta-bar {
-    background:var(--accent); padding:28px 40px;
-    display:flex; justify-content:space-between; align-items:center;
-    flex-wrap:wrap; gap:16px; margin-top:2px;
-  }
-  .cta-bar-text .t1 { font-family:'Barlow Condensed',sans-serif; font-size:24px; font-weight:800; color:#fff; letter-spacing:2px; text-transform:uppercase; line-height:1; }
-  .cta-bar-text .t2 { font-size:13px; color:rgba(255,255,255,.75); margin-top:4px; }
-  .btn-wpp {
-    display:inline-flex; align-items:center; gap:10px;
-    background:#fff; color:var(--accent); font-family:'DM Sans',sans-serif;
-    font-weight:600; font-size:14px; padding:12px 24px;
-    text-decoration:none; transition:opacity .2s; white-space:nowrap;
-  }
-  .btn-wpp:hover { opacity:.88; }
-
-  /* ── FOOTER ── */
-  footer {
-    background:#1A1A1A; padding:22px 40px;
-    display:flex; justify-content:space-between; align-items:center;
-    flex-wrap:wrap; gap:8px;
-  }
-  .ft-logo { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; color:rgba(255,255,255,.45); letter-spacing:3px; }
-  .ft-logo span { color:var(--accent); }
-  .ft-disc { font-size:10px; color:rgba(255,255,255,.2); letter-spacing:.5px; text-align:center; flex:1; }
-  .ft-right { font-size:11px; color:rgba(255,255,255,.35); letter-spacing:2px; text-transform:uppercase; }
-
-  @media(max-width:600px){
-    .site-header { padding:14px 20px; }
-    .header-badge { display:none; }
-    .hero { padding:52px 20px 40px; }
-    .card,.food-section { padding:24px 18px; }
-    .metrics-grid,.macro-grid { grid-template-columns:1fr; }
-    .cta-bar { padding:24px 20px; flex-direction:column; text-align:center; }
-    footer { padding:18px 20px; flex-direction:column; text-align:center; gap:6px; }
-    .ft-disc { order:3; }
-  }
+.result{
+  margin-top:20px;
+  background:#eee;
+  padding:15px;
+  white-space:pre-line;
+}
 </style>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<header class="site-header">
-  <div class="logo">
-    <div class="logo-mark"><div class="lm-bl"></div><div class="lm-tr"></div><span>GT</span></div>
-    <div class="logo-text">
-      <div class="logo-name">Gabriel Totino</div>
-      <div class="logo-sub">Consultor de Treino</div>
-    </div>
-  </div>
-  <div class="header-badge">
-    <div class="hb-dot"></div>
-    <span>Ferramenta gratuita</span>
-  </div>
-</header>
+<div class="container">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-ring r1"></div>
-  <div class="hero-ring r2"></div>
-  <span class="hero-label">Calculadora Nutricional</span>
-  <h1 class="hero-title">Descubra sua <span class="acc">TMB</span><br>e monte sua dieta</h1>
-  <p class="hero-desc">Calcule sua taxa metabólica basal, entenda suas necessidades calóricas e monte um plano alimentar personalizado com os alimentos que você já tem em casa.</p>
-</section>
+<h2>Calculadora de Dieta</h2>
 
-<!-- MAIN -->
-<div class="main">
+<select id="sexo">
+<option value="m">Masculino</option>
+<option value="f">Feminino</option>
+</select>
 
-  <!-- STEP 1 -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-step">01</div>
-      <div class="card-title">Seus dados</div>
-    </div>
+<input type="number" id="idade" placeholder="Idade">
+<input type="number" id="peso" placeholder="Peso (kg)">
+<input type="number" id="altura" placeholder="Altura (cm)">
 
-    <div class="form-grid">
-      <div class="field"><label>Sexo</label>
-        <select id="sexo"><option value="m">Masculino</option><option value="f">Feminino</option></select>
-      </div>
-      <div class="field"><label>Idade (anos)</label>
-        <input type="number" id="idade" min="14" max="90" value="28">
-      </div>
-      <div class="field"><label>Peso (kg)</label>
-        <input type="number" id="peso" min="30" max="250" step="0.1" value="80">
-      </div>
-      <div class="field"><label>Altura (cm)</label>
-        <input type="number" id="altura" min="100" max="220" value="175">
-      </div>
-      <div class="field"><label>Nível de atividade</label>
-        <select id="atividade">
-          <option value="1.2">Sedentário (sem exercício)</option>
-          <option value="1.375">Leve (1–2x por semana)</option>
-          <option value="1.55" selected>Moderado (3–4x por semana)</option>
-          <option value="1.725">Intenso (5–6x por semana)</option>
-          <option value="1.9">Muito intenso (atleta / diário)</option>
-        </select>
-      </div>
-      <div class="field"><label>Objetivo</label>
-        <select id="objetivo">
-          <option value="perda">Emagrecer</option>
-          <option value="manutencao">Manter o peso</option>
-          <option value="massa">Ganhar massa</option>
-        </select>
-      </div>
-    </div>
+<select id="atividade">
+<option value="1.2">Sedentário</option>
+<option value="1.55">Moderado</option>
+<option value="1.9">Intenso</option>
+</select>
 
-    <button class="btn-calc" onclick="calcularTMB()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      Calcular minha TMB
-    </button>
-  </div>
+<select id="objetivo">
+<option value="perda">Emagrecer</option>
+<option value="manutencao">Manter</option>
+<option value="massa">Ganhar massa</option>
+</select>
 
-  <!-- RESULTS -->
-  <div class="results" id="results">
-    <div class="metrics-grid">
-      <div class="metric"><div class="metric-label">TMB em repouso</div><div class="metric-value" id="r-tmb">—</div><div class="metric-unit">kcal/dia</div></div>
-      <div class="metric featured"><div class="metric-label">Meta calórica diária</div><div class="metric-value" id="r-meta">—</div><div class="metric-unit">kcal/dia</div></div>
-      <div class="metric"><div class="metric-label">Gasto total estimado</div><div class="metric-value" id="r-tdee">—</div><div class="metric-unit">kcal/dia</div></div>
-    </div>
-    <div class="macro-grid">
-      <div class="macro prot"><div class="macro-name">Proteína</div><div class="macro-g" id="r-prot">—</div><div class="macro-kcal" id="r-prot-k">—</div><div class="bar-wrap"><div class="bar" id="bar-prot" style="background:#378ADD"></div></div></div>
-      <div class="macro carb"><div class="macro-name">Carboidrato</div><div class="macro-g" id="r-carb">—</div><div class="macro-kcal" id="r-carb-k">—</div><div class="bar-wrap"><div class="bar" id="bar-carb" style="background:#639922"></div></div></div>
-      <div class="macro fat"><div class="macro-name">Gordura</div><div class="macro-g" id="r-fat">—</div><div class="macro-kcal" id="r-fat-k">—</div><div class="bar-wrap"><div class="bar" id="bar-fat" style="background:#BA7517"></div></div></div>
-    </div>
-  </div>
+<button onclick="calcular()">Calcular</button>
 
-  <!-- STEP 2 -->
-  <div class="food-section" id="food-section" style="display:none">
-    <div class="card-header">
-      <div class="card-step">02</div>
-      <div class="card-title">Monte sua dieta</div>
-    </div>
+<textarea id="foods" placeholder="Digite alimentos (ex: arroz, frango, ovo)"></textarea>
 
-    <div class="food-note">
-      <strong>Como funciona:</strong> liste abaixo os alimentos que você tem disponível em casa. A IA vai montar um plano alimentar completo para o dia, distribuído em refeições, usando esses alimentos e respeitando sua meta calórica.
-    </div>
+<button onclick="gerar()">Gerar dieta</button>
 
-    <textarea class="food-textarea" id="foods-input"
-      placeholder="Ex: frango, arroz, ovos, brócolis, batata-doce, azeite, banana, aveia, leite, feijão, queijo cottage..."></textarea>
-
-    <button class="btn-calc" id="btn-gerar" onclick="gerarDieta()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      Gerar meu plano alimentar
-    </button>
-
-    <div class="loading" id="loading">
-      <div class="spin"></div>
-      <span>Montando seu plano alimentar personalizado...</span>
-    </div>
-
-    <div class="ai-result" id="ai-result">
-      <div class="ai-header">
-        <div class="ai-dot"></div>
-        <div class="ai-title">Seu plano alimentar personalizado</div>
-      </div>
-      <div class="ai-content" id="ai-content"></div>
-    </div>
-
-    <button class="btn-download" id="btn-download" onclick="baixarPDF()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Baixar plano alimentar em PDF
-    </button>
-  </div>
-
-  <!-- DISCLAIMER -->
-  <div class="disclaimer">
-    <strong>Aviso importante:</strong> Esta ferramenta tem caráter exclusivamente informativo. Os cálculos são baseados na fórmula Mifflin-St Jeor e as sugestões são geradas por inteligência artificial. <strong>Não substituem</strong> a orientação de um nutricionista ou médico. Gabriel Totino não é nutricionista.
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-bar">
-    <div class="cta-bar-text">
-      <div class="t1">Quer um treino feito para você?</div>
-      <div class="t2">Consultoria personalizada · Método adaptado à sua vida real</div>
-    </div>
-    <a href="https://wa.me/5531992304713?text=Olá%20Gabriel,%20usei%20a%20calculadora%20e%20quero%20saber%20mais%20sobre%20a%20consultoria!" class="btn-wpp" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      Falar com Gabriel
-    </a>
-  </div>
+<div class="result" id="resultado"></div>
 
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="ft-logo"><span>GT</span> · Gabriel Totino</div>
-  <div class="ft-disc">Este site não é afiliado, associado ou endossado pelo Meta Platforms, Inc., Facebook ou Instagram.</div>
-  <div class="ft-right">Resultado e Performance · © 2025</div>
-</footer>
-
 <script>
-  var dadosCalculo = {};
 
-  function calcularTMB() {
-    var sexo   = document.getElementById('sexo').value;
-    var idade  = parseFloat(document.getElementById('idade').value);
-    var peso   = parseFloat(document.getElementById('peso').value);
-    var altura = parseFloat(document.getElementById('altura').value);
-    var fat    = parseFloat(document.getElementById('atividade').value);
-    var obj    = document.getElementById('objetivo').value;
+var dados = {};
 
-    if (!idade || !peso || !altura) { alert('Preencha todos os campos.'); return; }
+function calcular(){
+  var sexo = document.getElementById('sexo').value;
+  var idade = document.getElementById('idade').value;
+  var peso = document.getElementById('peso').value;
+  var altura = document.getElementById('altura').value;
+  var atividade = document.getElementById('atividade').value;
+  var objetivo = document.getElementById('objetivo').value;
 
-    var tmb = sexo === 'm'
-      ? 10*peso + 6.25*altura - 5*idade + 5
-      : 10*peso + 6.25*altura - 5*idade - 161;
+  var tmb = sexo == "m"
+    ? 10*peso + 6.25*altura - 5*idade + 5
+    : 10*peso + 6.25*altura - 5*idade - 161;
 
-    var tdee = tmb * fat;
-    var meta = obj === 'perda' ? Math.round(tdee-400) : obj === 'massa' ? Math.round(tdee+300) : Math.round(tdee);
+  var tdee = tmb * atividade;
 
-    var protG = obj === 'perda' ? Math.round(peso*2.2) : obj === 'massa' ? Math.round(peso*2.0) : Math.round(peso*1.8);
-    var fatG  = Math.round((meta*0.25)/9);
-    var carbG = Math.max(0, Math.round((meta - protG*4 - fatG*9)/4));
-    var total = protG*4 + carbG*4 + fatG*9;
+  var meta = objetivo=="perda" ? tdee-400 :
+             objetivo=="massa" ? tdee+300 :
+             tdee;
 
-    document.getElementById('r-tmb').textContent  = Math.round(tmb).toLocaleString('pt-BR');
-    document.getElementById('r-tdee').textContent = Math.round(tdee).toLocaleString('pt-BR');
-    document.getElementById('r-meta').textContent = meta.toLocaleString('pt-BR');
-    document.getElementById('r-prot').textContent = protG+'g';
-    document.getElementById('r-prot-k').textContent = (protG*4).toLocaleString('pt-BR')+' kcal';
-    document.getElementById('r-carb').textContent = carbG+'g';
-    document.getElementById('r-carb-k').textContent = (carbG*4).toLocaleString('pt-BR')+' kcal';
-    document.getElementById('r-fat').textContent  = fatG+'g';
-    document.getElementById('r-fat-k').textContent  = (fatG*9).toLocaleString('pt-BR')+' kcal';
+  var prot = peso*2;
+  var fat = (meta*0.25)/9;
+  var carb = (meta - prot*4 - fat*9)/4;
 
-    setTimeout(function(){
-      document.getElementById('bar-prot').style.width = Math.round(protG*4/total*100)+'%';
-      document.getElementById('bar-carb').style.width = Math.round(carbG*4/total*100)+'%';
-      document.getElementById('bar-fat').style.width  = Math.round(fatG*9/total*100)+'%';
-    }, 200);
+  dados = {
+    meta: Math.round(meta),
+    prot: Math.round(prot),
+    carb: Math.round(carb),
+    fat: Math.round(fat)
+  };
 
-    dadosCalculo = {
-      sexo: sexo==='m'?'Masculino':'Feminino', idade:idade, peso:peso, altura:altura,
-      objetivo: obj==='perda'?'emagrecer': obj==='massa'?'ganhar massa muscular':'manter o peso',
-      meta:meta, protG:protG, carbG:carbG, fatG:fatG
-    };
+  alert("Calorias: " + dados.meta);
+}
 
-    document.getElementById('results').classList.add('visible');
-    var fs = document.getElementById('food-section');
-    fs.style.display = 'block';
-    fs.scrollIntoView({behavior:'smooth', block:'start'});
+function gerar(){
+  var foods = document.getElementById('foods').value;
+  if(!foods){ alert("Digite alimentos"); return; }
+
+  var lista = foods.split(',');
+
+  function pick(){
+    return lista[Math.floor(Math.random()*lista.length)];
   }
 
-  async function gerarDieta() {
-    var foods = document.getElementById('foods-input').value.trim();
-    if (!foods) { alert('Liste ao menos alguns alimentos disponíveis.'); return; }
-    if (!dadosCalculo.meta) { alert('Calcule sua TMB primeiro.'); return; }
+  var kcal = Math.round(dados.meta/5);
 
-    var btn = document.getElementById('btn-gerar');
-    btn.disabled = true;
-    document.getElementById('loading').classList.add('visible');
-    document.getElementById('ai-result').classList.remove('visible');
-    document.getElementById('btn-download').style.display = 'none';
+  var dieta =
+`PLANO ALIMENTAR
 
-    var prompt = 'Você é um assistente nutricional. Monte um plano alimentar COMPLETO para um dia, dividido em 5 refeições (café da manhã, lanche da manhã, almoço, lanche da tarde e jantar).\n\n'
-      + 'DADOS:\n- Sexo: '+dadosCalculo.sexo+'\n- Idade: '+dadosCalculo.idade+' anos\n- Peso: '+dadosCalculo.peso+' kg\n- Altura: '+dadosCalculo.altura+' cm\n'
-      + '- Objetivo: '+dadosCalculo.objetivo+'\n- Meta calórica: '+dadosCalculo.meta+' kcal\n- Proteína: '+dadosCalculo.protG+'g\n- Carboidrato: '+dadosCalculo.carbG+'g\n- Gordura: '+dadosCalculo.fatG+'g\n\n'
-      + 'ALIMENTOS DISPONÍVEIS:\n'+foods+'\n\n'
-      + 'INSTRUÇÕES:\n- Use APENAS os alimentos listados\n- Para cada refeição: horário, nome, alimentos com quantidades, calorias estimadas\n- Total de calorias e macros ao final\n- Uma dica nutricional rápida no final\n- Formate com separadores entre refeições\n- Responda em português brasileiro';
+Calorias: ${dados.meta}
+Proteína: ${dados.prot}g
+Carbo: ${dados.carb}g
+Gordura: ${dados.fat}g
 
-    try {
-      var res = await fetch('https://api.anthropic.com/v1/messages', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}] })
-      });
-      var data = await res.json();
-      var text = data.content && data.content[0] ? data.content[0].text : 'Não foi possível gerar o plano. Tente novamente.';
-      document.getElementById('ai-content').textContent = text;
-      document.getElementById('ai-result').classList.add('visible');
-      document.getElementById('btn-download').style.display = 'flex';
-      document.getElementById('ai-result').scrollIntoView({behavior:'smooth', block:'start'});
-    } catch(e) {
-      document.getElementById('ai-content').textContent = 'Erro ao gerar o plano. Verifique sua conexão e tente novamente.';
-      document.getElementById('ai-result').classList.add('visible');
-    }
+Café da manhã:
+- ${pick()} + ${pick()}
 
-    document.getElementById('loading').classList.remove('visible');
-    btn.disabled = false;
-  }
+Almoço:
+- ${pick()} + ${pick()}
 
-  function baixarPDF() {
-    var { jsPDF } = window.jspdf;
-    var doc = new jsPDF({ unit:'mm', format:'a4' });
-    var W = doc.internal.pageSize.getWidth();
-    var H = doc.internal.pageSize.getHeight();
-    var mg = 18;
-    var y = 0;
+Jantar:
+- ${pick()} + ${pick()}
 
-    function checkPage(n) { if(y+n > H-18){ doc.addPage(); y=18; } }
+Dica: beba água e mantenha consistência.`;
 
-    // Header
-    doc.setFillColor(240,90,40);
-    doc.rect(0,0,W,12,'F');
-    doc.setFillColor(250,250,248);
-    doc.rect(0,12,W,22,'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(18); doc.setTextColor(240,90,40);
-    doc.text('GT', mg, 27);
-    doc.setFontSize(13); doc.setTextColor(26,26,26);
-    doc.text('GABRIEL TOTINO', mg+12, 27);
-    doc.setFontSize(7); doc.setTextColor(240,90,40);
-    doc.text('CONSULTOR DE TREINO', mg+12, 31);
-    doc.setFontSize(9); doc.setTextColor(107,114,128);
-    doc.text('PLANO ALIMENTAR PERSONALIZADO', W-mg, 27, {align:'right'});
-    doc.text(new Date().toLocaleDateString('pt-BR'), W-mg, 31, {align:'right'});
-    y = 44;
+  document.getElementById('resultado').innerText = dieta;
+}
 
-    // Dados
-    doc.setFillColor(244,242,238);
-    doc.rect(mg, y, W-mg*2, 22,'F');
-    doc.setFontSize(7); doc.setTextColor(240,90,40); doc.setFont('helvetica','bold');
-    doc.text('SEUS DADOS', mg+4, y+6);
-    doc.setFontSize(9); doc.setTextColor(26,26,26); doc.setFont('helvetica','normal');
-    var d = dadosCalculo;
-    var info = 'Objetivo: '+d.objetivo+'  |  Meta: '+d.meta+' kcal/dia  |  Proteína: '+d.protG+'g  |  Carboidrato: '+d.carbG+'g  |  Gordura: '+d.fatG+'g';
-    doc.text(info, mg+4, y+14, {maxWidth: W-mg*2-8});
-    doc.setFontSize(8); doc.setTextColor(107,114,128);
-    doc.text('TMB: '+document.getElementById('r-tmb').textContent+' kcal  |  Gasto total: '+document.getElementById('r-tdee').textContent+' kcal', mg+4, y+20);
-    y += 30;
-
-    // Título
-    doc.setFontSize(7); doc.setTextColor(240,90,40); doc.setFont('helvetica','bold');
-    doc.text('PLANO ALIMENTAR', mg, y); y += 3;
-    doc.setDrawColor(240,90,40); doc.setLineWidth(0.4);
-    doc.line(mg, y, W-mg, y); y += 8;
-
-    // Conteúdo
-    var content = document.getElementById('ai-content').textContent || '';
-    var lines = doc.splitTextToSize(content, W-mg*2);
-    doc.setFont('helvetica','normal'); doc.setFontSize(9);
-    for(var i=0; i<lines.length; i++){
-      var ln = lines[i];
-      checkPage(6);
-      if(/^(café|lanche|almoço|jantar|pré|pós|\d{2}:\d{2}|total|dica)/i.test(ln.trim())){
-        doc.setFont('helvetica','bold'); doc.setTextColor(240,90,40);
-      } else {
-        doc.setFont('helvetica','normal'); doc.setTextColor(60,60,60);
-      }
-      doc.text(ln, mg, y); y += 5.5;
-    }
-
-    // Disclaimer
-    checkPage(20); y+=6;
-    doc.setFillColor(244,242,238);
-    doc.rect(mg, y, W-mg*2, 16,'F');
-    doc.setFontSize(7); doc.setFont('helvetica','italic'); doc.setTextColor(107,114,128);
-    var disc = 'Este plano tem caráter exclusivamente informativo e não substitui a orientação de um nutricionista ou médico. Gabriel Totino não é nutricionista.';
-    doc.text(doc.splitTextToSize(disc, W-mg*2-8), mg+4, y+5);
-    y += 20;
-
-    // Footer em todas as páginas
-    var total = doc.getNumberOfPages();
-    for(var pg=1; pg<=total; pg++){
-      doc.setPage(pg);
-      doc.setFillColor(240,90,40);
-      doc.rect(0, H-8, W, 8,'F');
-      doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(255,255,255);
-      doc.text('© Gabriel Totino · Consultor de Treino · Resultado e Performance', mg, H-2.5);
-      doc.text('Página '+pg+' de '+total, W-mg, H-2.5, {align:'right'});
-    }
-
-    doc.save('plano_alimentar_gabriel_totino.pdf');
-  }
 </script>
+
 </body>
 </html>
