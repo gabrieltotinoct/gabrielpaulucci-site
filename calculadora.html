@@ -461,11 +461,11 @@
     fs.scrollIntoView({behavior:'smooth', block:'start'});
   }
 
-  function gerarDieta() {
-  var foods = document.getElementById('foods-input').value.trim();
+function gerarDieta() {
+  var foods = document.getElementById('foods-input').value.trim().toLowerCase();
 
   if (!foods) {
-    alert('Liste ao menos alguns alimentos disponíveis.');
+    alert('Liste os alimentos.');
     return;
   }
 
@@ -474,71 +474,252 @@
     return;
   }
 
-  var lista = foods.toLowerCase().split(',').map(f => f.trim());
+  var lista = foods.split(',').map(f => f.trim());
 
-  // Separação básica por tipo
-  var proteinas = lista.filter(f => 
-    f.includes('frango') || f.includes('ovo') || f.includes('carne') || f.includes('peixe') || f.includes('atum') || f.includes('whey') || f.includes('queijo')
-  );
+  // Base nutricional média por 100g
 
-  var carbs = lista.filter(f => 
-    f.includes('arroz') || f.includes('batata') || f.includes('mandioca') || f.includes('macarrão') || f.includes('pão') || f.includes('aveia')
-  );
+  var tabela = {
 
-  var gorduras = lista.filter(f => 
-    f.includes('azeite') || f.includes('manteiga') || f.includes('amendoim') || f.includes('castanha')
-  );
+  // PROTEÍNAS ANIMAIS
+  frango: {p:31, c:0, g:3},
+  peito de frango: {p:32, c:0, g:3},
+  frango grelhado: {p:31, c:0, g:3},
+  carne: {p:26, c:0, g:15},
+  patinho: {p:26, c:0, g:10},
+  alcatra: {p:25, c:0, g:15},
+  contrafile: {p:24, c:0, g:20},
+  carne moida: {p:26, c:0, g:15},
+  peixe: {p:22, c:0, g:5},
+  tilapia: {p:26, c:0, g:2},
+  salmao: {p:25, c:0, g:14},
+  atum: {p:25, c:0, g:1},
+  sardinha: {p:25, c:0, g:11},
+  ovo: {p:13, c:1, g:10},
+  clara: {p:11, c:1, g:0},
+  gema: {p:16, c:1, g:27},
 
-  var frutas = lista.filter(f => 
-    f.includes('banana') || f.includes('maçã') || f.includes('mamão') || f.includes('laranja')
-  );
+  // LATICÍNIOS
+  leite: {p:3, c:5, g:3},
+  leite desnatado: {p:3, c:5, g:0},
+  leite integral: {p:3, c:5, g:3},
+  iogurte: {p:5, c:7, g:3},
+  iogurte natural: {p:5, c:6, g:3},
+  iogurte grego: {p:10, c:4, g:5},
+  queijo: {p:25, c:2, g:30},
+  queijo minas: {p:18, c:3, g:20},
+  queijo muçarela: {p:22, c:2, g:22},
+  queijo prato: {p:20, c:2, g:25},
+  cottage: {p:11, c:3, g:4},
+  requeijão: {p:7, c:3, g:25},
 
-  function pick(arr, fallback) {
-    return arr.length ? arr[Math.floor(Math.random() * arr.length)] : fallback;
+  // SUPLEMENTOS
+  whey: {p:24, c:3, g:2},
+  whey isolado: {p:26, c:1, g:1},
+  hipercalorico: {p:15, c:70, g:5},
+
+  // CARBOIDRATOS BASE
+  arroz: {p:2, c:28, g:0},
+  arroz branco: {p:2, c:28, g:0},
+  arroz integral: {p:3, c:23, g:1},
+  feijao: {p:8, c:14, g:1},
+  lentilha: {p:9, c:20, g:1},
+  grao de bico: {p:8, c:27, g:2},
+  macarrao: {p:5, c:30, g:1},
+  macarrao integral: {p:6, c:25, g:2},
+
+  // TUBÉRCULOS
+  batata: {p:2, c:20, g:0},
+  batata doce: {p:2, c:23, g:0},
+  mandioca: {p:1, c:30, g:0},
+  inhame: {p:2, c:27, g:0},
+  cará: {p:2, c:28, g:0},
+
+  // PÃES E CEREAIS
+  pão: {p:8, c:50, g:2},
+  pão integral: {p:9, c:45, g:3},
+  pão francês: {p:9, c:55, g:2},
+  aveia: {p:17, c:66, g:7},
+  granola: {p:10, c:60, g:10},
+  cuscuz: {p:3, c:25, g:1},
+  tapioca: {p:0, c:88, g:0},
+
+  // FRUTAS
+  banana: {p:1, c:23, g:0},
+  maçã: {p:0, c:14, g:0},
+  mamão: {p:1, c:11, g:0},
+  laranja: {p:1, c:12, g:0},
+  abacaxi: {p:0, c:13, g:0},
+  manga: {p:1, c:15, g:0},
+  melancia: {p:0, c:8, g:0},
+  melão: {p:1, c:9, g:0},
+  morango: {p:1, c:8, g:0},
+  uva: {p:1, c:17, g:0},
+  pera: {p:0, c:15, g:0},
+
+  // GORDURAS
+  azeite: {p:0, c:0, g:100},
+  manteiga: {p:0, c:0, g:80},
+  margarina: {p:0, c:0, g:80},
+  óleo: {p:0, c:0, g:100},
+  óleo de coco: {p:0, c:0, g:100},
+  amendoim: {p:26, c:16, g:49},
+  pasta de amendoim: {p:25, c:20, g:50},
+  castanha: {p:15, c:14, g:50},
+  nozes: {p:15, c:14, g:65},
+  amêndoa: {p:21, c:22, g:50},
+  abacate: {p:2, c:9, g:15},
+
+  // LEGUMES / VERDURAS
+  brócolis: {p:3, c:7, g:0},
+  cenoura: {p:1, c:10, g:0},
+  tomate: {p:1, c:4, g:0},
+  alface: {p:1, c:2, g:0},
+  couve: {p:3, c:6, g:1},
+  espinafre: {p:3, c:4, g:0},
+  abobrinha: {p:1, c:4, g:0},
+  berinjela: {p:1, c:6, g:0},
+  pepino: {p:1, c:3, g:0},
+  cebola: {p:1, c:9, g:0},
+
+  // EXTRAS COMUNS
+  açúcar: {p:0, c:100, g:0},
+  mel: {p:0, c:82, g:0},
+  chocolate: {p:5, c:60, g:30},
+  chocolate amargo: {p:7, c:45, g:35},
+  biscoito: {p:6, c:70, g:20},
+  bolo: {p:5, c:60, g:25},
+  abobora: {p:1, c:10, g:0},
+moranga: {p:1, c:10, g:0},
+abobora cabotia: {p:1, c:11, g:0},
+  // PROTEÍNAS EXTRAS
+lombo: {p:27, c:0, g:14},
+peru: {p:29, c:0, g:1},
+presunto: {p:18, c:2, g:10},
+bacon: {p:12, c:1, g:37},
+hamburguer: {p:17, c:0, g:20},
+
+// OVOS E VARIAÇÕES
+omelete: {p:10, c:2, g:9},
+ovo cozido: {p:13, c:1, g:10},
+ovo frito: {p:13, c:1, g:14},
+
+// CARBO DO DIA A DIA
+farofa: {p:2, c:35, g:10},
+polenta: {p:2, c:20, g:1},
+milho: {p:3, c:19, g:1},
+pipoca: {p:12, c:78, g:4},
+rap10: {p:8, c:45, g:5},
+
+// BEBIDAS
+suco: {p:0, c:10, g:0},
+suco natural: {p:0, c:12, g:0},
+refrigerante: {p:0, c:11, g:0},
+café: {p:0, c:0, g:0},
+cafe: {p:0, c:0, g:0},
+
+// DOCES / ESCAPES
+doce de leite: {p:5, c:60, g:20},
+nutella: {p:6, c:57, g:31},
+sorvete: {p:4, c:24, g:11},
+barra de chocolate: {p:5, c:60, g:30},
+
+// COMIDA BRASILEIRA
+feijoada: {p:8, c:15, g:15},
+strogonoff: {p:10, c:6, g:15},
+arroz carreteiro: {p:10, c:30, g:10},
+escondidinho: {p:8, c:25, g:12},
+
+// LANCHES
+pizza: {p:11, c:33, g:10},
+pastel: {p:7, c:30, g:15},
+coxinha: {p:9, c:25, g:15},
+sanduiche: {p:12, c:30, g:10},
+
+// FIT / LOW CAL
+tapioca fit: {p:1, c:80, g:0},
+iogurte light: {p:6, c:5, g:1},
+queijo light: {p:20, c:2, g:10},
+
+};
+
+  function getFood(nome) {
+    for (var key in tabela) {
+      if (nome.includes(key)) return {nome:key, ...tabela[key]};
+    }
+    return null;
   }
 
-  function montarRefeicao(nome) {
-    var p = pick(proteinas, 'ovo');
-    var c = pick(carbs, 'arroz');
-    var g = pick(gorduras, 'azeite');
-    var f = pick(frutas, 'banana');
+  var alimentos = lista.map(getFood).filter(f => f);
 
-    return `
-${nome}
-- ${p} (120g)
-- ${c} (100g)
-- ${f}
-- ${g} (10g)
-(~${Math.round(dadosCalculo.meta/5)} kcal)
-`;
+  if (alimentos.length === 0) {
+    alert('Nenhum alimento reconhecido.');
+    return;
   }
 
-  var dieta =
-`📅 PLANO ALIMENTAR PERSONALIZADO
+  function pickMacro(tipo) {
+    var filtrados = alimentos.filter(a => a[tipo] > 0);
+    return filtrados.length ? filtrados[Math.floor(Math.random()*filtrados.length)] : alimentos[0];
+  }
+
+  var metaP = dadosCalculo.protG;
+  var metaC = dadosCalculo.carbG;
+  var metaG = dadosCalculo.fatG;
+
+  var refeicoes = ["Café da manhã","Lanche da manhã","Almoço","Lanche da tarde","Jantar"];
+
+  var dieta = `📅 PLANO ALIMENTAR PROFISSIONAL
 
 🔥 Meta: ${dadosCalculo.meta} kcal
-🥩 Proteína: ${dadosCalculo.protG}g
-🍞 Carboidrato: ${dadosCalculo.carbG}g
-🥑 Gordura: ${dadosCalculo.fatG}g
+🥩 Proteína: ${metaP}g
+🍞 Carboidrato: ${metaC}g
+🥑 Gordura: ${metaG}g
 
 ────────────────────
+`;
 
-${montarRefeicao("☀️ Café da manhã")}
+  var totalP=0, totalC=0, totalG=0;
 
-${montarRefeicao("🍎 Lanche da manhã")}
+  refeicoes.forEach(ref => {
+    var prot = pickMacro('p');
+    var carb = pickMacro('c');
+    var gord = pickMacro('g');
 
-${montarRefeicao("🍛 Almoço")}
+    var qtdProt = 120;
+    var qtdCarb = 100;
+    var qtdGord = 10;
 
-${montarRefeicao("🍌 Lanche da tarde")}
+    var p = prot.p * qtdProt / 100;
+    var c = carb.c * qtdCarb / 100;
+    var g = gord.g * qtdGord / 100;
 
-${montarRefeicao("🌙 Jantar")}
+    totalP += p;
+    totalC += c;
+    totalG += g;
 
+    var kcal = Math.round(p*4 + c*4 + g*9);
+
+    dieta += `
+${ref}
+- ${qtdProt}g de ${prot.nome}
+- ${qtdCarb}g de ${carb.nome}
+- ${qtdGord}g de ${gord.nome}
+(~${kcal} kcal)
+`;
+  });
+
+  dieta += `
 ────────────────────
+
+📊 TOTAL DO DIA (estimado)
+Proteína: ${Math.round(totalP)}g
+Carboidrato: ${Math.round(totalC)}g
+Gordura: ${Math.round(totalG)}g
+Calorias: ${Math.round(totalP*4 + totalC*4 + totalG*9)} kcal
 
 💡 Estratégia:
-- Priorize proteína em todas refeições
-- Ajuste quantidades conforme fome
-- Mantenha consistência diária
+- Proteína distribuída ao longo do dia
+- Ajuste quantidades se necessário
+- Priorize consistência
 `;
 
   document.getElementById('ai-content').textContent = dieta;
