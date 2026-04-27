@@ -474,41 +474,72 @@
     return;
   }
 
-  var lista = foods.split(',').map(f => f.trim()).filter(f => f);
+  var lista = foods.toLowerCase().split(',').map(f => f.trim());
 
-  function pick() {
-    return lista[Math.floor(Math.random() * lista.length)];
+  // Separação básica por tipo
+  var proteinas = lista.filter(f => 
+    f.includes('frango') || f.includes('ovo') || f.includes('carne') || f.includes('peixe') || f.includes('atum') || f.includes('whey') || f.includes('queijo')
+  );
+
+  var carbs = lista.filter(f => 
+    f.includes('arroz') || f.includes('batata') || f.includes('mandioca') || f.includes('macarrão') || f.includes('pão') || f.includes('aveia')
+  );
+
+  var gorduras = lista.filter(f => 
+    f.includes('azeite') || f.includes('manteiga') || f.includes('amendoim') || f.includes('castanha')
+  );
+
+  var frutas = lista.filter(f => 
+    f.includes('banana') || f.includes('maçã') || f.includes('mamão') || f.includes('laranja')
+  );
+
+  function pick(arr, fallback) {
+    return arr.length ? arr[Math.floor(Math.random() * arr.length)] : fallback;
+  }
+
+  function montarRefeicao(nome) {
+    var p = pick(proteinas, 'ovo');
+    var c = pick(carbs, 'arroz');
+    var g = pick(gorduras, 'azeite');
+    var f = pick(frutas, 'banana');
+
+    return `
+${nome}
+- ${p} (120g)
+- ${c} (100g)
+- ${f}
+- ${g} (10g)
+(~${Math.round(dadosCalculo.meta/5)} kcal)
+`;
   }
 
   var dieta =
 `📅 PLANO ALIMENTAR PERSONALIZADO
 
-🔥 Meta calórica: ${dadosCalculo.meta} kcal
+🔥 Meta: ${dadosCalculo.meta} kcal
 🥩 Proteína: ${dadosCalculo.protG}g
 🍞 Carboidrato: ${dadosCalculo.carbG}g
 🥑 Gordura: ${dadosCalculo.fatG}g
 
 ────────────────────
 
-☀️ Café da manhã
-- ${pick()} + ${pick()}
+${montarRefeicao("☀️ Café da manhã")}
 
-🍎 Lanche da manhã
-- ${pick()} + ${pick()}
+${montarRefeicao("🍎 Lanche da manhã")}
 
-🍛 Almoço
-- ${pick()} + ${pick()}
+${montarRefeicao("🍛 Almoço")}
 
-🍌 Lanche da tarde
-- ${pick()} + ${pick()}
+${montarRefeicao("🍌 Lanche da tarde")}
 
-🌙 Jantar
-- ${pick()} + ${pick()}
+${montarRefeicao("🌙 Jantar")}
 
 ────────────────────
 
-💡 Dica:
-Ajuste as quantidades conforme sua rotina.`;
+💡 Estratégia:
+- Priorize proteína em todas refeições
+- Ajuste quantidades conforme fome
+- Mantenha consistência diária
+`;
 
   document.getElementById('ai-content').textContent = dieta;
   document.getElementById('ai-result').classList.add('visible');
