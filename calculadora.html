@@ -1,125 +1,66 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora TMB + Plano Alimentar</title>
+<!-- COLE TUDO ISSO NO SEU ARQUIVO -->
 
-<style>
-body{
-  font-family: Arial;
-  background:#f5f5f5;
-  padding:20px;
-}
-
-.container{
-  max-width:500px;
-  margin:auto;
-  background:#fff;
-  padding:20px;
-  border-radius:10px;
-}
-
-input, select, textarea{
-  width:100%;
-  padding:10px;
-  margin-bottom:10px;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  background:#F05A28;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
-
-.result{
-  margin-top:20px;
-  background:#eee;
-  padding:15px;
-  white-space:pre-line;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<h2>Calculadora de Dieta</h2>
-
-<select id="sexo">
-<option value="m">Masculino</option>
-<option value="f">Feminino</option>
-</select>
-
-<input type="number" id="idade" placeholder="Idade">
-<input type="number" id="peso" placeholder="Peso (kg)">
-<input type="number" id="altura" placeholder="Altura (cm)">
-
-<select id="atividade">
-<option value="1.2">Sedentário</option>
-<option value="1.55">Moderado</option>
-<option value="1.9">Intenso</option>
-</select>
-
-<select id="objetivo">
-<option value="perda">Emagrecer</option>
-<option value="manutencao">Manter</option>
-<option value="massa">Ganhar massa</option>
-</select>
-
-<button onclick="calcular()">Calcular</button>
-
-<textarea id="foods" placeholder="Digite alimentos (ex: arroz, frango, ovo)"></textarea>
-
-<button onclick="gerar()">Gerar dieta</button>
-
-<div class="result" id="resultado"></div>
-
-</div>
+<!-- (seu HTML inteiro continua igual até o <script>) -->
 
 <script>
+var dadosCalculo = {};
 
-var dados = {};
+function calcularTMB() {
+  var sexo   = document.getElementById('sexo').value;
+  var idade  = parseFloat(document.getElementById('idade').value);
+  var peso   = parseFloat(document.getElementById('peso').value);
+  var altura = parseFloat(document.getElementById('altura').value);
+  var fat    = parseFloat(document.getElementById('atividade').value);
+  var obj    = document.getElementById('objetivo').value;
 
-function calcular(){
-  var sexo = document.getElementById('sexo').value;
-  var idade = document.getElementById('idade').value;
-  var peso = document.getElementById('peso').value;
-  var altura = document.getElementById('altura').value;
-  var atividade = document.getElementById('atividade').value;
-  var objetivo = document.getElementById('objetivo').value;
+  if (!idade || !peso || !altura) {
+    alert('Preencha todos os campos.');
+    return;
+  }
 
-  var tmb = sexo == "m"
+  var tmb = sexo === 'm'
     ? 10*peso + 6.25*altura - 5*idade + 5
     : 10*peso + 6.25*altura - 5*idade - 161;
 
-  var tdee = tmb * atividade;
+  var tdee = tmb * fat;
+  var meta = obj === 'perda' ? Math.round(tdee-400)
+            : obj === 'massa' ? Math.round(tdee+300)
+            : Math.round(tdee);
 
-  var meta = objetivo=="perda" ? tdee-400 :
-             objetivo=="massa" ? tdee+300 :
-             tdee;
+  var protG = Math.round(peso*2);
+  var fatG  = Math.round((meta*0.25)/9);
+  var carbG = Math.round((meta - protG*4 - fatG*9)/4);
 
-  var prot = peso*2;
-  var fat = (meta*0.25)/9;
-  var carb = (meta - prot*4 - fat*9)/4;
+  document.getElementById('r-tmb').textContent  = Math.round(tmb);
+  document.getElementById('r-tdee').textContent = Math.round(tdee);
+  document.getElementById('r-meta').textContent = meta;
 
-  dados = {
-    meta: Math.round(meta),
-    prot: Math.round(prot),
-    carb: Math.round(carb),
-    fat: Math.round(fat)
-  };
+  document.getElementById('r-prot').textContent = protG+'g';
+  document.getElementById('r-carb').textContent = carbG+'g';
+  document.getElementById('r-fat').textContent  = fatG+'g';
 
-  alert("Calorias: " + dados.meta);
+  document.getElementById('r-prot-k').textContent = (protG*4)+' kcal';
+  document.getElementById('r-carb-k').textContent = (carbG*4)+' kcal';
+  document.getElementById('r-fat-k').textContent  = (fatG*9)+' kcal';
+
+  dadosCalculo = { meta, protG, carbG, fatG };
+
+  document.getElementById('results').classList.add('visible');
+  document.getElementById('food-section').style.display = 'block';
 }
 
-function gerar(){
-  var foods = document.getElementById('foods').value;
-  if(!foods){ alert("Digite alimentos"); return; }
+function gerarDieta() {
+  var foods = document.getElementById('foods-input').value.trim();
+
+  if (!foods) {
+    alert('Digite os alimentos');
+    return;
+  }
+
+  if (!dadosCalculo.meta) {
+    alert('Calcule primeiro');
+    return;
+  }
 
   var lista = foods.split(',');
 
@@ -127,31 +68,40 @@ function gerar(){
     return lista[Math.floor(Math.random()*lista.length)];
   }
 
-  var kcal = Math.round(dados.meta/5);
+  var kcal = Math.round(dadosCalculo.meta / 5);
 
   var dieta =
-`PLANO ALIMENTAR
+`📅 PLANO ALIMENTAR
 
-Calorias: ${dados.meta}
-Proteína: ${dados.prot}g
-Carbo: ${dados.carb}g
-Gordura: ${dados.fat}g
+🔥 Meta: ${dadosCalculo.meta} kcal
+🥩 Proteína: ${dadosCalculo.protG}g
+🍞 Carbo: ${dadosCalculo.carbG}g
+🥑 Gordura: ${dadosCalculo.fatG}g
 
-Café da manhã:
+────────────────────
+
+☀️ Café da manhã
 - ${pick()} + ${pick()}
 
-Almoço:
+🍎 Lanche da manhã
 - ${pick()} + ${pick()}
 
-Jantar:
+🍛 Almoço
 - ${pick()} + ${pick()}
 
-Dica: beba água e mantenha consistência.`;
+🍌 Lanche da tarde
+- ${pick()} + ${pick()}
 
-  document.getElementById('resultado').innerText = dieta;
+🌙 Jantar
+- ${pick()} + ${pick()}
+
+────────────────────
+
+💡 Dica:
+Beba água e mantenha consistência.`;
+
+  document.getElementById('ai-content').textContent = dieta;
+  document.getElementById('ai-result').classList.add('visible');
+  document.getElementById('btn-download').style.display = 'flex';
 }
-
 </script>
-
-</body>
-</html>
