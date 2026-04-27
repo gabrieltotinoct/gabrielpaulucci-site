@@ -1,7 +1,3 @@
-<!-- COLE TUDO ISSO NO SEU ARQUIVO -->
-
-<!-- (seu HTML inteiro continua igual até o <script>) -->
-
 <script>
 var dadosCalculo = {};
 
@@ -23,6 +19,7 @@ function calcularTMB() {
     : 10*peso + 6.25*altura - 5*idade - 161;
 
   var tdee = tmb * fat;
+
   var meta = obj === 'perda' ? Math.round(tdee-400)
             : obj === 'massa' ? Math.round(tdee+300)
             : Math.round(tdee);
@@ -50,15 +47,15 @@ function calcularTMB() {
 }
 
 function gerarDieta() {
-  var foods = document.getElementById('foods-input').value.trim();
+  var foods = document.getElementById('foods-input').value;
 
   if (!foods) {
-    alert('Digite os alimentos');
+    alert('Digite alimentos');
     return;
   }
 
   if (!dadosCalculo.meta) {
-    alert('Calcule primeiro');
+    alert('Clique em CALCULAR TMB primeiro');
     return;
   }
 
@@ -71,36 +68,21 @@ function gerarDieta() {
   var kcal = Math.round(dadosCalculo.meta / 5);
 
   var dieta =
-`📅 PLANO ALIMENTAR
+"📅 PLANO ALIMENTAR\n\n" +
+"🔥 Meta: " + dadosCalculo.meta + " kcal\n" +
+"🥩 Proteína: " + dadosCalculo.protG + "g\n" +
+"🍞 Carbo: " + dadosCalculo.carbG + "g\n" +
+"🥑 Gordura: " + dadosCalculo.fatG + "g\n\n" +
 
-🔥 Meta: ${dadosCalculo.meta} kcal
-🥩 Proteína: ${dadosCalculo.protG}g
-🍞 Carbo: ${dadosCalculo.carbG}g
-🥑 Gordura: ${dadosCalculo.fatG}g
+"☀️ Café da manhã\n- " + pick() + " + " + pick() + "\n\n" +
+"🍎 Lanche da manhã\n- " + pick() + " + " + pick() + "\n\n" +
+"🍛 Almoço\n- " + pick() + " + " + pick() + "\n\n" +
+"🍌 Lanche da tarde\n- " + pick() + " + " + pick() + "\n\n" +
+"🌙 Jantar\n- " + pick() + " + " + pick() + "\n\n" +
 
-────────────────────
+"💡 Dica: beba água e mantenha consistência.";
 
-☀️ Café da manhã
-- ${pick()} + ${pick()}
-
-🍎 Lanche da manhã
-- ${pick()} + ${pick()}
-
-🍛 Almoço
-- ${pick()} + ${pick()}
-
-🍌 Lanche da tarde
-- ${pick()} + ${pick()}
-
-🌙 Jantar
-- ${pick()} + ${pick()}
-
-────────────────────
-
-💡 Dica:
-Beba água e mantenha consistência.`;
-
-  document.getElementById('ai-content').textContent = dieta;
+  document.getElementById('ai-content').innerText = dieta;
   document.getElementById('ai-result').classList.add('visible');
   document.getElementById('btn-download').style.display = 'flex';
 }
